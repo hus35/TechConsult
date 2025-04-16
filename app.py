@@ -10,14 +10,14 @@ DATA_FILE = 'data.json'
 # تحميل البيانات من JSON
 def load_data():
     if os.path.exists(DATA_FILE):
-        with open(DATA_FILE, 'r') as f:
+        with open(DATA_FILE, 'r', encoding='utf-8') as f:
             return json.load(f)
     return {"requests": []}
 
 # حفظ البيانات إلى JSON
 def save_data(data):
-    with open(DATA_FILE, 'w') as f:
-        json.dump(data, f, indent=4)
+    with open(DATA_FILE, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
 
 @app.route('/')
 def index():
@@ -42,7 +42,7 @@ def contact():
         }
         data['requests'].append(new_request)
         save_data(data)
-        return jsonify({'status': 'success', 'message': 'Request submitted!'})
+        return jsonify({'status': 'success', 'message': 'تم إرسال الطلب بنجاح!'})
     return render_template('contact.html')
 
 @app.route('/dashboard')
